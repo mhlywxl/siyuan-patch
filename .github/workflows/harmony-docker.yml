@@ -2,6 +2,10 @@ name: harmony-docker
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: "release version/tag"
+        required: true
 
 jobs:
   build:
@@ -41,7 +45,7 @@ jobs:
       - uses: joutvhu/get-release@v1
         id: get_current_release
         with:
-          tag_name: 5.1.0.54
+          tag_name: ${{ github.event.inputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
