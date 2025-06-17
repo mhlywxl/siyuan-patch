@@ -12,6 +12,10 @@ jobs:
           - os: ubuntu-22.04
 
     steps:
+      - name: Create ohos-sdk directory
+        run: |
+          mkdir -p ${{ github.workspace }}/siyuan-note/ohos-sdk/
+        shell: bash
       - name: Download OpenHarmony SDK
         working-directory: ${{ github.workspace }}/siyuan-note/ohos-sdk/
         run: |
