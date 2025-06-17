@@ -41,7 +41,7 @@ jobs:
       - uses: joutvhu/get-release@v1
         id: get_current_release
         with:
-          tag_name: ${{ github.event.inputs.version }}
+          tag_name: 5.1.0.54
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
