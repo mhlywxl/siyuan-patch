@@ -58,6 +58,7 @@ jobs:
       - run: |
           go version
           whereis go
+          # 修改 go 源码
           cd ${{ github.workspace }}/siyuan-note/siyuan/kernel/harmony
           ./build.sh && mv libkernel.so ${{ github.workspace }}/siyuan-note/siyuan-harmony/entry/libs/arm64-v8a/
           ./build-win.sh && mv libkernel.so ${{ github.workspace }}/siyuan-note/siyuan-harmony/entry/libs/x86_64/
