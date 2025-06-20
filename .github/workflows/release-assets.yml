@@ -35,14 +35,36 @@ jobs:
           git status
           cd ..
 
+
+#          mkdir -p /mnt/f/
+#
+#          git clone --branch main --depth=1 https://github.com/harmony-contrib/log-adaptor.git /mnt/f/
+#          wget https://github.com/mhlywxl/siyuan-patch/releases/download/v3.1.32/ohos-linux.tar
+#          tar -xvf ohos-linux.tar -C /mnt/f/
+#          rm -rf ohos-linux.tar
+      # 缓存 ohos-linux.tar
+      - name: Cache ohos-linux.tar
+        id: cache-ohos
+        uses: actions/cache@v3
+        with:
+          path: /mnt/f/ohos-linux.tar
+          key: ohos-linux-v3.1.32
+      # 下载并解压 ohos-linux.tar，仅在缓存未命中时执行
+      - name: Download and extract ohos-linux.tar
+        if: steps.cache-ohos.outputs.cache-hit != 'true'
+        run: |
           mkdir -p /mnt/f/
+          wget https://github.com/mhlywxl/siyuan-patch/releases/download/v3.1.32/ohos-linux.tar -P /mnt/f/
+          tar -xvf /mnt/f/ohos-linux.tar -C /mnt/f/
 
+      # 克隆 log-adaptor
+      - name: Clone log-adaptor
+        run: |
           git clone --branch main --depth=1 https://github.com/harmony-contrib/log-adaptor.git /mnt/f/
-          wget https://github.com/mhlywxl/siyuan-patch/releases/download/v3.1.32/ohos-linux.tar
-          tar -xvf ohos-linux.tar -C /mnt/f/
-          rm -rf ohos-linux.tar
 
-          git clone --branch ${{ github.event.inputs.version }} --depth=1 https://github.com/siyuan-note/siyuan-harmony.git
+      - name: clone siyuan-harmony
+        run: |
+          git clone --branch main --depth=1 https://github.com/siyuan-note/siyuan-harmony.git
           cd siyuan-harmony
 
           #git apply ${{ github.workspace }}/siyuan-note/patches/siyuan-harmony/debug-build.patch
