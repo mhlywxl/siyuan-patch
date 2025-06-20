@@ -43,19 +43,39 @@ jobs:
 #          tar -xvf ohos-linux.tar -C /mnt/f/
 #          rm -rf ohos-linux.tar
       # 缓存 ohos-linux.tar
-      - name: Cache ohos-linux.tar
-        id: cache-ohos
+      - name: Cache OpenHarmony SDK
+        id: cache-sdk
         uses: actions/cache@v3
         with:
-          path: ${{ github.workspace }}/siyuan-note/mnt/f/ohos-linux.tar
-          key: ohos-linux-v3.1.32
-      # 下载并解压 ohos-linux.tar，仅在缓存未命中时执行
-      - name: Download and extract ohos-linux.tar
-        if: steps.cache-ohos.outputs.cache-hit != 'true'
+          path: ${{ github.workspace }}/siyuan-note/ohos-sdk/
+          key: ${{ runner.os }}-openharmony-sdk-5.1.0.54-20250313_021647
+          restore-keys: |
+            ${{ runner.os }}-openharmony-sdk-
+      - name: Create ohos-sdk directory
+        if: steps.cache-sdk.outputs.cache-hit != 'true'
         run: |
-          mkdir -p ${{ github.workspace }}/siyuan-note/mnt/f/
-          wget https://github.com/mhlywxl/siyuan-patch/releases/download/v3.1.32/ohos-linux.tar -P ${{ github.workspace }}/siyuan-note/mnt/f/
-          tar -xvf ${{ github.workspace }}/siyuan-note/mnt/f/ohos-linux.tar -C ${{ github.workspace }}/siyuan-note/mnt/f/
+          mkdir -p ${{ github.workspace }}/siyuan-note/ohos-sdk/
+        shell: bash
+
+      - name: Download OpenHarmony SDK
+        if: steps.cache-sdk.outputs.cache-hit != 'true'
+        working-directory: ${{ github.workspace }}/siyuan-note/ohos-sdk/
+        run: |
+          # 下载 OpenHarmony SDK
+          wget https://cidownload.openharmony.cn/version/Master_Version/OpenHarmony_5.1.0.54/20250313_021647/version-Master_Version-OpenHarmony_5.1.0.54-20250313_021647-ohos-sdk-public.tar.gz
+          tar -xzvf *.tar.gz
+          ls -lh
+
+
+      - name: unzip ohos-sdk
+        working-directory: ${{ github.workspace }}/siyuan-note/ohos-sdk/
+        run: |
+          ls -lh
+          rm -rf linux windows linux.tar
+          tar -xzvf *.tar.gz
+          cd linux && for i in *.zip;do unzip $i;done && rm *.zip 
+          ls -lh
+        shell: bash
 
       # 克隆 log-adaptor
       - name: Clone log-adaptor
@@ -83,7 +103,7 @@ jobs:
           # 修改 go 源码
           cd ${{ github.workspace }}/siyuan-note/siyuan/kernel/harmony
           
-          export OHOS_NDK_HOME=${{ github.workspace }}/siyuan-note/mnt/f/ohos-linux/linux/
+          export OHOS_NDK_HOME=${{ github.workspace }}/siyuan-note/ohos-sdk/linux/
           export LOG_ADAPTOR_HOME=${{ github.workspace }}/siyuan-note/mnt/f/log-adaptor
           
           sed -i '/^export OHOS_NDK_HOME/s/^/# /' build.sh
