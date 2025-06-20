@@ -105,7 +105,8 @@ jobs:
       - run: |
           go version
           whereis go
-          # 修改 go 源码
+          # 修改 go 源码,将cgo_resold.go中的size_t替换为socklen_t
+          sed -i 's/size_t/socklen_t/g' /usr/local/go/src/runtime/cgo/cgo_resold.go
           cd ${{ github.workspace }}/siyuan-note/siyuan/kernel/harmony
           
           export OHOS_NDK_HOME=${{ github.workspace }}/siyuan-note/ohos-sdk/linux/
@@ -115,6 +116,9 @@ jobs:
           sed -i '/^export OHOS_NDK_HOME/s/^/# /' build-win.sh
           sed -i '/^export LOG_ADAPTOR_HOME/s/^/# /' build.sh
           sed -i '/^export LOG_ADAPTOR_HOME/s/^/# /' build-win.sh
+          
+          cat build.sh
+          cat build-win.sh
           
           ./build.sh && mv libkernel.so ${{ github.workspace }}/siyuan-note/siyuan-harmony/entry/libs/arm64-v8a/
           ./build-win.sh && mv libkernel.so ${{ github.workspace }}/siyuan-note/siyuan-harmony/entry/libs/x86_64/
