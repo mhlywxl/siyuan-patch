@@ -44,7 +44,8 @@ jobs:
         working-directory: ${{ github.workspace }}/siyuan-note/ohos-sdk/
         run: |
           ls -lh
-          cd version-Master_Version-OpenHarmony_5.1.0.54-20250313_021647-ohos-sdk-public/linux && for i in *.zip;do unzip $i;done && rm *.zip 
+          rm -rf linux windows linux.tar
+          linux && for i in *.zip;do unzip $i;done && rm *.zip 
           cd ..
           tar -cvf ${{ github.workspace }}/siyuan-note/ohos-sdk/linux.tar linux
         shell: bash
