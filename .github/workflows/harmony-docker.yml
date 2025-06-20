@@ -68,3 +68,4 @@ jobs:
           asset_name: ohos-linux.tar
           asset_path: ${{ github.workspace }}/siyuan-note/ohos-sdk/linux.tar
           asset_content_type: application/octet-stream
+          overwrite: true
