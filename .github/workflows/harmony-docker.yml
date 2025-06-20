@@ -15,15 +15,15 @@ jobs:
         config:
           - os: ubuntu-22.04
 
-    steps:
-      - name: Cache OpenHarmony SDK
-        id: cache-sdk
-        uses: actions/cache@v3
-        with:
-          path: ${{ github.workspace }}/siyuan-note/ohos-sdk/
-          key: ${{ runner.os }}-openharmony-sdk-5.1.0.54-20250313_021647
-          restore-keys: |
-            ${{ runner.os }}-openharmony-sdk-
+#    steps:
+#      - name: Cache OpenHarmony SDK
+#        id: cache-sdk
+#        uses: actions/cache@v3
+#        with:
+#          path: ${{ github.workspace }}/siyuan-note/ohos-sdk/
+#          key: ${{ runner.os }}-openharmony-sdk-5.1.0.54-20250313_021647
+#          restore-keys: |
+#            ${{ runner.os }}-openharmony-sdk-
 
 #      - name: Create ohos-sdk directory
 #        if: steps.cache-sdk.outputs.cache-hit != 'true'
