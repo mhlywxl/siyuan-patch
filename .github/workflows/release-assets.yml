@@ -47,20 +47,20 @@ jobs:
         id: cache-ohos
         uses: actions/cache@v3
         with:
-          path: /mnt/f/ohos-linux.tar
+          path: ${{ github.workspace }}/siyuan-note/mnt/f/ohos-linux.tar
           key: ohos-linux-v3.1.32
       # 下载并解压 ohos-linux.tar，仅在缓存未命中时执行
       - name: Download and extract ohos-linux.tar
         if: steps.cache-ohos.outputs.cache-hit != 'true'
         run: |
-          mkdir -p /mnt/f/
-          wget https://github.com/mhlywxl/siyuan-patch/releases/download/v3.1.32/ohos-linux.tar -P /mnt/f/
-          tar -xvf /mnt/f/ohos-linux.tar -C /mnt/f/
+          mkdir -p ${{ github.workspace }}/siyuan-note/mnt/f/
+          wget https://github.com/mhlywxl/siyuan-patch/releases/download/v3.1.32/ohos-linux.tar -P ${{ github.workspace }}/siyuan-note/mnt/f/
+          tar -xvf ${{ github.workspace }}/siyuan-note/mnt/f/ohos-linux.tar -C ${{ github.workspace }}/siyuan-note/mnt/f/
 
       # 克隆 log-adaptor
       - name: Clone log-adaptor
         run: |
-          git clone --branch main --depth=1 https://github.com/harmony-contrib/log-adaptor.git /mnt/f/
+          git clone --branch main --depth=1 https://github.com/harmony-contrib/log-adaptor.git ${{ github.workspace }}/siyuan-note/mnt/f/
 
       - name: clone siyuan-harmony
         run: |
@@ -70,7 +70,7 @@ jobs:
           #git apply ${{ github.workspace }}/siyuan-note/patches/siyuan-harmony/debug-build.patch
 
           mkdir -p entry/libs/
-          cp -r /mnt/f/log-adaptor/dist/. entry/libs/
+          cp -r ${{ github.workspace }}/siyuan-note/mnt/f/log-adaptor/dist/. entry/libs/
           mkdir -p entry/src/main/resources/rawfile/
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -82,6 +82,15 @@ jobs:
           whereis go
           # 修改 go 源码
           cd ${{ github.workspace }}/siyuan-note/siyuan/kernel/harmony
+          
+          export OHOS_NDK_HOME=${{ github.workspace }}/siyuan-note/mnt/f/ohos-linux/linux/
+          export LOG_ADAPTOR_HOME=${{ github.workspace }}/siyuan-note/mnt/f/log-adaptor
+          
+          sed -i '/^export OHOS_NDK_HOME/s/^/# /' build.sh
+          sed -i '/^export OHOS_NDK_HOME/s/^/# /' build-win.sh
+          sed -i '/^export LOG_ADAPTOR_HOME/s/^/# /' build.sh
+          sed -i '/^export LOG_ADAPTOR_HOME/s/^/# /' build-win.sh
+          
           ./build.sh && mv libkernel.so ${{ github.workspace }}/siyuan-note/siyuan-harmony/entry/libs/arm64-v8a/
           ./build-win.sh && mv libkernel.so ${{ github.workspace }}/siyuan-note/siyuan-harmony/entry/libs/x86_64/
 
