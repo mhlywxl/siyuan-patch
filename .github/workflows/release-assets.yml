@@ -81,13 +81,15 @@ jobs:
       - name: Clone log-adaptor
         run: |
           pwd
-          git clone --branch main https://github.com/harmony-contrib/log-adaptor.git ${{ github.workspace }}/siyuan-note/mnt/f/
+          mkdir -p ${{ github.workspace }}/siyuan-note/mnt/f/log-adaptor
+          git clone --branch main --depth=1 https://github.com/harmony-contrib/log-adaptor.git ${{ github.workspace }}/siyuan-note/mnt/f/log-adaptor
           ls -lh ${{ github.workspace }}/siyuan-note/mnt/f/
 
       - name: clone siyuan-harmony
         run: |
           pwd
-          git clone --branch main https://github.com/siyuan-note/siyuan-harmony.git
+          mkdir -p ${{ github.workspace }}/siyuan-note/mnt/f/log-adaptor
+          git clone --branch main --depth=1 https://github.com/siyuan-note/siyuan-harmony.git
           cd siyuan-harmony
 
           #git apply ${{ github.workspace }}/siyuan-note/patches/siyuan-harmony/debug-build.patch
