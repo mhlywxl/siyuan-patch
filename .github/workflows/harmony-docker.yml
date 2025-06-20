@@ -45,6 +45,7 @@ jobs:
         run: |
           ls -lh
           rm -rf linux windows linux.tar
+          tar -xzvf *.tar.gz
           cd linux && for i in *.zip;do unzip $i;done && rm *.zip 
           ls -lh
           cd ..
