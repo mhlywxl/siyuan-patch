@@ -25,35 +25,35 @@ jobs:
 
       - name: clone origin and apply patches
         run: |
-          mkdir -p ${{ github.workspace }}/go
-          cd ${{ github.workspace }}/siyuan-note/
-
-          git clone --branch ${{ github.event.inputs.version }} --depth=1 https://github.com/siyuan-note/siyuan.git
-          cd siyuan
-
-          git apply ${{ github.workspace }}/siyuan-note/patches/siyuan/disable-update.patch
-          git apply ${{ github.workspace }}/siyuan-note/patches/siyuan/default-config.patch
-          git apply ${{ github.workspace }}/siyuan-note/patches/siyuan/mock-vip-user.patch
-
-          git status
-          
-          cd ..
+               mkdir -p ${{ github.workspace }}/go
+               cd ${{ github.workspace }}/siyuan-note/
                
-          mkdir -p /mnt/f/
+               git clone --branch ${{ github.event.inputs.version }} --depth=1 https://github.com/siyuan-note/siyuan.git
+               cd siyuan
                
-          git clone --branch main --depth=1 https://github.com/harmony-contrib/log-adaptor.git /mnt/f/
-          wget https://github.com/mhlywxl/siyuan-patch/releases/download/v3.1.32/ohos-linux.tar
-          tar -xvf ohos-linux.tar -C /mnt/f/
-          rm -rf ohos-linux.tar
+               git apply ${{ github.workspace }}/siyuan-note/patches/siyuan/disable-update.patch
+               git apply ${{ github.workspace }}/siyuan-note/patches/siyuan/default-config.patch
+               git apply ${{ github.workspace }}/siyuan-note/patches/siyuan/mock-vip-user.patch
+               
+               git status
+               
+               cd ..
+               
+               mkdir -p /mnt/f/
+               
+               git clone --branch main --depth=1 https://github.com/harmony-contrib/log-adaptor.git /mnt/f/
+               wget https://github.com/mhlywxl/siyuan-patch/releases/download/v3.1.32/ohos-linux.tar
+               tar -xvf ohos-linux.tar -C /mnt/f/
+               rm -rf ohos-linux.tar
+               
+               git clone --branch ${{ github.event.inputs.version }} --depth=1 https://github.com/siyuan-note/siyuan-harmony.git
+               cd siyuan-harmony
           
-          git clone --branch ${{ github.event.inputs.version }} --depth=1 https://github.com/siyuan-note/siyuan-harmony.git
-          cd siyuan-harmony
-
-#          git apply ${{ github.workspace }}/siyuan-note/patches/siyuan-harmony/debug-build.patch
-
-          mkdir -p entry/libs/
-          cp -r /mnt/f/log-adaptor/dist/. entry/libs/
-          mkdir -p entry/src/main/resources/rawfile/
+          #          git apply ${{ github.workspace }}/siyuan-note/patches/siyuan-harmony/debug-build.patch
+               
+               mkdir -p entry/libs/
+               cp -r /mnt/f/log-adaptor/dist/. entry/libs/
+               mkdir -p entry/src/main/resources/rawfile/
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -66,7 +66,7 @@ jobs:
           cd ${{ github.workspace }}/siyuan-note/siyuan/kernel/harmony
           ./build.sh && mv libkernel.so ${{ github.workspace }}/siyuan-note/siyuan-harmony/entry/libs/arm64-v8a/
           ./build-win.sh && mv libkernel.so ${{ github.workspace }}/siyuan-note/siyuan-harmony/entry/libs/x86_64/
-          
+
 
       - name: Set up Node
         uses: actions/setup-node@v4
