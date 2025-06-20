@@ -45,7 +45,7 @@ jobs:
         run: |
           ls -lh
           rm -rf linux windows linux.tar
-          linux && for i in *.zip;do unzip $i;done && rm *.zip 
+          cd linux && for i in *.zip;do unzip $i;done && rm *.zip 
           cd ..
           tar -cvf ${{ github.workspace }}/siyuan-note/ohos-sdk/linux.tar linux
         shell: bash
