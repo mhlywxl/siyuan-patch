@@ -25,11 +25,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-openharmony-sdk-
 
-      - name: Create ohos-sdk directory
-        if: steps.cache-sdk.outputs.cache-hit != 'true'
-        run: |
-          mkdir -p ${{ github.workspace }}/siyuan-note/ohos-sdk/
-        shell: bash
+#      - name: Create ohos-sdk directory
+#        if: steps.cache-sdk.outputs.cache-hit != 'true'
+#        run: |
+#          mkdir -p ${{ github.workspace }}/siyuan-note/ohos-sdk/
+#        shell: bash
 
 #      - name: Download OpenHarmony SDK
 #        if: steps.cache-sdk.outputs.cache-hit != 'true'
