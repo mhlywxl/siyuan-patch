@@ -81,6 +81,7 @@ jobs:
       - name: Clone log-adaptor
         run: |
           git clone --branch main --depth=1 https://github.com/harmony-contrib/log-adaptor.git ${{ github.workspace }}/siyuan-note/mnt/f/
+          ls -lh ${{ github.workspace }}/siyuan-note/mnt/f/
 
       - name: clone siyuan-harmony
         run: |
