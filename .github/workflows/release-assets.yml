@@ -72,10 +72,10 @@ jobs:
         working-directory: ${{ github.workspace }}/opt/
         run: |
           wget https://dl.google.com/go/go1.24.4.linux-amd64.tar.gz
-          rm -rf /usr/local/go 
-          tar -C /usr/local -xzf go1.24.4.linux-amd64.tar.gz 
+          rm -rf ${{ github.workspace }}/opt/go 
+          tar -C ${{ github.workspace }}/opt -xzf go1.24.4.linux-amd64.tar.gz 
           rm go1.24.4.linux-amd64.tar.gz
-          echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.bashrc
+          echo "export PATH=$PATH:${{ github.workspace }}/opt/go/bin" >> ~/.bashrc
 
         shell: bash
       # 克隆 log-adaptor
@@ -107,7 +107,7 @@ jobs:
           go version
           whereis go
           # 修改 go 源码,将cgo_resold.go中的size_t替换为socklen_t
-          sed -i 's/size_t/socklen_t/g' /usr/local/go/src/net/cgo_resold.go
+          sed -i 's/size_t/socklen_t/g' ${{ github.workspace }}/opt/go/src/net/cgo_resold.go
           cd ${{ github.workspace }}/siyuan-note/siyuan/kernel/harmony
           
           export OHOS_NDK_HOME=${{ github.workspace }}/siyuan-note/ohos-sdk/linux/
