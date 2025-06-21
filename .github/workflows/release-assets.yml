@@ -35,15 +35,6 @@ jobs:
           git apply ${{ github.workspace }}/siyuan-note/patches/siyuan/mock-vip-user.patch
           git status
           cd ..
-
-
-#          mkdir -p /mnt/f/
-#
-#          git clone --branch main --depth=1 https://github.com/harmony-contrib/log-adaptor.git /mnt/f/
-#          wget https://github.com/mhlywxl/siyuan-patch/releases/download/v3.1.32/ohos-linux.tar
-#          tar -xvf ohos-linux.tar -C /mnt/f/
-#          rm -rf ohos-linux.tar
-      # 缓存 ohos-linux.tar
       - name: Cache OpenHarmony SDK
         id: cache-sdk
         uses: actions/cache@v3
@@ -78,7 +69,7 @@ jobs:
         shell: bash
 
       - name: unzip go-sdk
-        working-directory: ${{ github.workspace }}/siyuan-note/opt/
+        working-directory: ${{ github.workspace }}/opt/
         run: |
           wget https://dl.google.com/go/go1.24.4.linux-amd64.tar.gz
           rm -rf /usr/local/go 
