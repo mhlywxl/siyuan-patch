@@ -25,6 +25,7 @@ jobs:
 
       - name: clone origin and apply patches
         run: |
+          mkdir -p ${{ github.workspace }}/opt
           mkdir -p ${{ github.workspace }}/go
           cd ${{ github.workspace }}/siyuan-note/
           git clone --branch ${{ github.event.inputs.version }} --depth=1 https://github.com/siyuan-note/siyuan.git
@@ -66,7 +67,6 @@ jobs:
           tar -xzvf *.tar.gz
           ls -lh
 
-
       - name: unzip ohos-sdk
         working-directory: ${{ github.workspace }}/siyuan-note/ohos-sdk/
         run: |
@@ -77,6 +77,16 @@ jobs:
           ls -lh
         shell: bash
 
+      - name: unzip go-sdk
+        working-directory: ${{ github.workspace }}/siyuan-note/opt/
+        run: |
+          wget https://dl.google.com/go/go1.24.4.linux-amd64.tar.gz
+          rm -rf /usr/local/go 
+          tar -C /usr/local -xzf go1.24.4.linux-amd64.tar.gz 
+          rm go1.24.4.linux-amd64.tar.gz
+          echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.bashrc
+
+        shell: bash
       # 克隆 log-adaptor
       - name: Clone log-adaptor
         run: |
@@ -106,7 +116,7 @@ jobs:
           go version
           whereis go
           # 修改 go 源码,将cgo_resold.go中的size_t替换为socklen_t
-          sed -i 's/size_t/socklen_t/g' /opt/hostedtoolcache/go/1.24.4/x64/bin/go/src/net/cgo_resold.go
+          sed -i 's/size_t/socklen_t/g' /usr/local/go/src/net/cgo_resold.go
           cd ${{ github.workspace }}/siyuan-note/siyuan/kernel/harmony
           
           export OHOS_NDK_HOME=${{ github.workspace }}/siyuan-note/ohos-sdk/linux/
