@@ -35,6 +35,15 @@ jobs:
           git apply ${{ github.workspace }}/siyuan-note/patches/siyuan/mock-vip-user.patch
           git status
           cd ..
+
+
+#          mkdir -p /mnt/f/
+#
+#          git clone --branch main --depth=1 https://github.com/harmony-contrib/log-adaptor.git /mnt/f/
+#          wget https://github.com/mhlywxl/siyuan-patch/releases/download/v3.1.32/ohos-linux.tar
+#          tar -xvf ohos-linux.tar -C /mnt/f/
+#          rm -rf ohos-linux.tar
+      # 缓存 ohos-linux.tar
       - name: Cache OpenHarmony SDK
         id: cache-sdk
         uses: actions/cache@v3
@@ -68,16 +77,16 @@ jobs:
           ls -lh
         shell: bash
 
-      - name: unzip go-sdk
-        working-directory: ${{ github.workspace }}/opt/
-        run: |
-          wget https://dl.google.com/go/go1.24.4.linux-amd64.tar.gz
-          rm -rf ${{ github.workspace }}/opt/go 
-          tar -C ${{ github.workspace }}/opt -xzf go1.24.4.linux-amd64.tar.gz 
-          rm go1.24.4.linux-amd64.tar.gz
-          echo "export PATH=$PATH:${{ github.workspace }}/opt/go/bin" >> ~/.bashrc
-
-        shell: bash
+#      - name: unzip go-sdk
+#        working-directory: ${{ github.workspace }}/siyuan-note/opt/
+#        run: |
+#          wget https://dl.google.com/go/go1.24.4.linux-amd64.tar.gz
+#          rm -rf /usr/local/go
+#          tar -C /usr/local -xzf go1.24.4.linux-amd64.tar.gz
+#          rm go1.24.4.linux-amd64.tar.gz
+#          echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.bashrc
+#
+#        shell: bash
       # 克隆 log-adaptor
       - name: Clone log-adaptor
         run: |
@@ -107,7 +116,7 @@ jobs:
           go version
           whereis go
           # 修改 go 源码,将cgo_resold.go中的size_t替换为socklen_t
-          sed -i 's/size_t/socklen_t/g' ${{ github.workspace }}/opt/go/src/net/cgo_resold.go
+          sed -i 's/size_t/socklen_t/g' /opt/hostedtoolcache/go/1.24.4/x64/src/net/cgo_resold.go
           cd ${{ github.workspace }}/siyuan-note/siyuan/kernel/harmony
           
           export OHOS_NDK_HOME=${{ github.workspace }}/siyuan-note/ohos-sdk/linux/
