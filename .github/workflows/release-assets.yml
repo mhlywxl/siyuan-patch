@@ -99,13 +99,17 @@ jobs:
         run: |
           pwd
           mkdir -p ${{ github.workspace }}/siyuan-note/mnt/f/log-adaptor
+          
+          cd ${{ github.workspace }}/siyuan-note/
           git clone --branch main --depth=1 https://github.com/siyuan-note/siyuan-harmony.git
+          ls -lh
           cd siyuan-harmony
 
           #git apply ${{ github.workspace }}/siyuan-note/patches/siyuan-harmony/debug-build.patch
 
           mkdir -p entry/libs/
           cp -r ${{ github.workspace }}/siyuan-note/mnt/f/log-adaptor/dist/. entry/libs/
+          ls -lh entry/libs/
           mkdir -p entry/src/main/resources/rawfile/
       - name: Set up Go
         uses: actions/setup-go@v5
