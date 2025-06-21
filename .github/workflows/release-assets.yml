@@ -108,7 +108,7 @@ jobs:
           #git apply ${{ github.workspace }}/siyuan-note/patches/siyuan-harmony/debug-build.patch
 
           mkdir -p entry/libs/
-          cp -r ${{ github.workspace }}/siyuan-note/mnt/f/log-adaptor/dist/. entry/libs/
+          cp -r ${{ github.workspace }}/siyuan-note/mnt/f/log-adaptor/dist/arm64-v8a ${{ github.workspace }}/siyuan-note/mnt/f/log-adaptor/dist/x86_64 entry/libs/
           ls -lh entry/libs/
           mkdir -p entry/src/main/resources/rawfile/
       - name: Set up Go
