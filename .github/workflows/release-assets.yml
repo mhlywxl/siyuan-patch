@@ -66,22 +66,29 @@ jobs:
           #wget https://cidownload.openharmony.cn/version/Master_Version/OpenHarmony_5.1.0.54/20250313_021647/version-Master_Version-OpenHarmony_5.1.0.54-20250313_021647-ohos-sdk-public.tar.gz
           #wget https://repo.huaweicloud.com/openharmony/os/5.1.0-Release/ohos-sdk-windows_linux-public.tar.gz
           wget https://repo.huaweicloud.com/openharmony/os/5.0.3-Release/ohos-sdk-windows_linux-public.tar.gz
+          rm -rf ohos-sdk
           tar -xzvf *.tar.gz
-          ls -lh
+          rm *.tar.gz
+          ls -lh ohos-sdk
+          rm -rf ohos-sdk/windows ohos-sdk/ohos
+          mv ohos-sdk/linux ./
+          cd linux && for i in *.zip;do unzip $i;done && rm *.zip
 
       - name: unzip ohos-sdk
         working-directory: ${{ github.workspace }}/siyuan-note/ohos-sdk/
         run: |
           ls -lh
-          #rm -rf linux windows linux.tar
-          rm -rf ohos-sdk/linux
           ls -lh ohos-sdk
-          cd ohos-sdk
+          # #rm -rf linux windows linux.tar
+          # rm -rf linux 
+          # ls -lh ohos-sdk
+          # cd ohos-sdk
+          
           #tar -xzvf *.tar.gz
-          cd linux && for i in *.zip;do unzip $i;done && rm *.zip 
-          cd ../
-          mv linux ../
-          ls -lh
+          # cd linux && for i in *.zip;do unzip $i;done && rm *.zip 
+          # cd ../
+          # mv linux ../
+          # ls -lh
         shell: bash
 
 #      - name: unzip go-sdk
