@@ -72,9 +72,13 @@ jobs:
         working-directory: ${{ github.workspace }}/siyuan-note/ohos-sdk/
         run: |
           ls -lh
-          rm -rf linux windows linux.tar
-          tar -xzvf *.tar.gz
+          #rm -rf linux windows linux.tar
+          ls -lh ohos-sdk
+          cd ohos-sdk
+          #tar -xzvf *.tar.gz
           cd linux && for i in *.zip;do unzip $i;done && rm *.zip 
+          cd ../
+          mv linux ../
           ls -lh
         shell: bash
 
