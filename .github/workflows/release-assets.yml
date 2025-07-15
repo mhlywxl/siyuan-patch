@@ -44,8 +44,22 @@ jobs:
 #          tar -xvf ohos-linux.tar -C /mnt/f/
 #          rm -rf ohos-linux.tar
       # 缓存 ohos-linux.tar
+      - name: Cache OpenHarmony SDK
+        id: cache-sdk
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/siyuan-note/ohos-sdk/
+          key: ${{ runner.os }}-openharmony-sdk-5.1.0-Release
+          restore-keys: |
+            ${{ runner.os }}-openharmony-sdk-
+      - name: Create ohos-sdk directory
+        if: steps.cache-sdk.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ${{ github.workspace }}/siyuan-note/ohos-sdk/
+        shell: bash
 
       - name: Download OpenHarmony SDK
+        if: steps.cache-sdk.outputs.cache-hit != 'true'
         working-directory: ${{ github.workspace }}/siyuan-note/ohos-sdk/
         run: |
           # 下载 OpenHarmony SDK
