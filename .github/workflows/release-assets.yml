@@ -65,7 +65,7 @@ jobs:
           # 下载 OpenHarmony SDK
           #wget https://cidownload.openharmony.cn/version/Master_Version/OpenHarmony_5.1.0.54/20250313_021647/version-Master_Version-OpenHarmony_5.1.0.54-20250313_021647-ohos-sdk-public.tar.gz
           #wget https://repo.huaweicloud.com/openharmony/os/5.1.0-Release/ohos-sdk-windows_linux-public.tar.gz
-#          wget https://repo.huaweicloud.com/openharmony/os/5.0.3-Release/ohos-sdk-windows_linux-public.tar.gz
+          #wget https://repo.huaweicloud.com/openharmony/os/5.0.3-Release/ohos-sdk-windows_linux-public.tar.gz
           wget https://repo.huaweicloud.com/openharmony/os/5.1.0-Release/ohos-sdk-windows_linux-public.tar.gz
           rm -rf ohos-sdk
           tar -xzvf *.tar.gz
