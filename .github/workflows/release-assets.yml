@@ -49,7 +49,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/siyuan-note/ohos-sdk/
-          key: ${{ runner.os }}-openharmony-sdk-5.1.0-Release
+          key: ${{ runner.os }}-openharmony-sdk-5.0.3-Release
           restore-keys: |
             ${{ runner.os }}-openharmony-sdk-
       - name: Create ohos-sdk directory
