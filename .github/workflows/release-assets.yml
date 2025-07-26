@@ -135,7 +135,7 @@ jobs:
       - run: |
           go version
           whereis go
-          GO_VERSION=$(go version | grep -o 'go[0-9.]*' | sed 's/go//')
+          GO_VERSION=$(go version | grep -o 'go[0-9.]*' | sed 's/go//' | tr -d '[:space:]')
           SED_PATH="/opt/hostedtoolcache/go/$GO_VERSION/x64/src/net/cgo_resold.go"
           echo $SED_PATH
           # 修改 go 源码,将cgo_resold.go中的size_t替换为socklen_t
