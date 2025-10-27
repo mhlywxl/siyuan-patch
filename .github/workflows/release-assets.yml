@@ -73,15 +73,13 @@ jobs:
           tar -xzvf *.tar.gz
           rm *.tar.gz
           ls -lh
-          rm -rf ohos-sdk/windows ohos-sdk/ohos
-          mv ohos-sdk/linux ./
+          rm -rf windows ohos
           cd linux && for i in *.zip;do unzip $i;done && rm *.zip
 
       - name: unzip ohos-sdk
         working-directory: ${{ github.workspace }}/siyuan-note/ohos-sdk/
         run: |
           ls -lh
-          ls -lh ohos-sdk
           # #rm -rf linux windows linux.tar
           # rm -rf linux 
           # ls -lh ohos-sdk
