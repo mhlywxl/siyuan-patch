@@ -72,7 +72,7 @@ jobs:
           
           tar -xzvf *.tar.gz
           rm *.tar.gz
-          ls -lh ohos-sdk
+          ls -lh
           rm -rf ohos-sdk/windows ohos-sdk/ohos
           mv ohos-sdk/linux ./
           cd linux && for i in *.zip;do unzip $i;done && rm *.zip
