@@ -153,6 +153,7 @@ jobs:
           cat build-win.sh
           
           ./build.sh && mv libkernel.so ${{ github.workspace }}/siyuan-note/siyuan-harmony/entry/libs/arm64-v8a/
+          mv libkernel.h ${{ github.workspace }}/siyuan-note/siyuan-harmony/entry/libs/
           ./build-win.sh && mv libkernel.so ${{ github.workspace }}/siyuan-note/siyuan-harmony/entry/libs/x86_64/
 
 
